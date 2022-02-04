@@ -1,0 +1,9 @@
+---
+-
+  url: http://www.bystegny.ru/
+  xpath: ''
+  data: ''
+-
+  url: ''
+  xpath: //*[@id="sites-chrome-adminfooter-container"]/div/p/b/a
+  data: Keys.RETURN
