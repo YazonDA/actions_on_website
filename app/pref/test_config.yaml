@@ -1,0 +1,19 @@
+---
+-
+  url: http://www.bystegny.ru/
+  xpath: ''
+  data: ''
+-
+  url: ''
+  xpath: //*[@id="sites-chrome-adminfooter-container"]/div/p/b/a
+  data: Keys.RETURN
+#-          shows that the next step will begin
+#  url:     sets the URL to which need go or '' if not now
+#  xpath:   sets the XPATH-label to which to specify or '' if not now
+#  data:    sets DATA/KEY for input or '' if not now
+#           NOTE: any DATA will be used only if XPATH is not empty
+#           TEMPL.:
+#                  Keys.RETURN - for click to ref
+#                  some_mail@gmail.com - for input to text-field
+#                  Secret.LOGIN - for input to text-field from
+#                                 a variable named LOGIN

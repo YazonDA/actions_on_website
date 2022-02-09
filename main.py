@@ -1,12 +1,11 @@
 import sys
-from app import Browser, Service, Config
+from app import Service
 
 
 def main(*args):
-    browser = Browser()
-    service = Service()
-    config = Config()
-    service.run(config, browser)
+    config = 'setup.ini'
+    service = Service(config)
+    service.run()
     print(f'OK')
 
 

@@ -1,22 +1,25 @@
 from random import randint
 from time import sleep
 from typing import Dict
-
-# from app import Browser, Config
+# from configparser import ConfigParser
+import configparser
+import app
 
 
 class Service:
-    def __init__(self):
-        self._img_path: Dict = {
-            'test_img': f'~/Pictures/some_.png',
-        }
+    def __init__(self, _config: str):
+        parser = configparser.ConfigParser()
+        parser.read(_config)
+        self.__config = app.Config(parser['PATH'])
+        print(f'{self.__config.steps=}')
+        self.__browser = app.Browser(self.__config.browser)
 
-    def run(self, config_, browser_):
-        for step in config_.steps:
+    def run(self):
+        for step in self.__config.steps:
             print(f'{step=}')
-            browser_.action_on_page(step)
+            self.__browser.action_on_page(step)
             sleep(randint(1, 5))
-            browser_.take_screenshoot()
+            self.__browser.take_screenshoot(self.__config.img)
 
     def quit(self):
         pass

@@ -1,5 +1,5 @@
-import os
-from os import path
+from pathlib import Path
+
 from yaml import load, dump
 try:
     from yaml import CLoader as Loader, CDumper as Dumper
@@ -7,21 +7,32 @@ except ImportError:
     from yaml import Loader, Dumper
 
 
-def _dotenv():
-    from dotenv import load_dotenv
-    dotenv_path = path.join(path.dirname(__file__), '.env')
-    if path.exists(dotenv_path):
-        load_dotenv(dotenv_path)
+class Config:
 
+    def __init__(self, _config):
+        app_dir = Path(__file__).resolve().parent.parent
+        steps_path = Path(app_dir, _config['STEPS_CONFIG'])
+        self.__set_steps(steps_path)
+        browser_config_path = Path(app_dir, _config['BROWSER_CONFIG'])
+        self.__set_browser_config(browser_config_path)
+        self.__set_img_path(_config['IMG_CONFIG'])
 
-class Config(object):
+        self.secret_path = _config['SECRET_CONFIG']
 
-    def __init__(self):
-        _dotenv()
-        target_config = os.environ.get('TARGET_CONFIG') or 'you_will_never_find'
-        with open(target_config, "r") as file_:
+    def __set_steps(self, steps_path):
+        with open(steps_path, "r") as file_:
             self.steps = load(file_, Loader=Loader)
-        print(f'{self.steps=}')
+
+    def __set_browser_config(self, browser_path):
+        with open(browser_path, "r") as file_:
+            self.browser = load(file_, Loader=Loader)
+
+    def __set_img_path(self, img_path):
+        home_dir = Path.home()
+        img_path = Path(home_dir, img_path)
+        if not img_path.exists():
+            img_path.mkdir()
+        self.img = img_path
 
 
 if __name__ == '__main__':
