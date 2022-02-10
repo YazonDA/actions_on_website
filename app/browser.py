@@ -20,8 +20,15 @@ class Browser:
     def __set_browser_type(self):
         import webbrowser as wb
         default_browser = wb.get()
+
+        # Used for:
+        #           ordinary
         # self.__type = default_browser.name.casefold()
+
+        #           development
         self.__type = 'chrome'
+
+        #           error test
         # self.__type = 'OpeRA'
 
     def __set_header(self, _config: dict):
@@ -55,12 +62,12 @@ class Browser:
         return True
 
     def take_screenshoot(self, img_path: str = '~/Pictures/image_for_save.png'):
-        base_name = 'scrnsht_'
-        base_suff = '_.png'
-        time_name = datetime.utcnow()
-        img_name = '_'.join(str(time_name).split())
-        file_name = Path(img_path, base_name + img_name + base_suff)
+        begin_name_part = 'scrnsht_'
+        middle_name_part = datetime.utcnow()
+        end_name_part = '_.png'
+        img_name = '_'.join(str(middle_name_part).split())
 
+        file_name = Path(img_path, begin_name_part + img_name + end_name_part)
         self.__browser.save_screenshot(str(file_name))
 
     def open_page(self, url_: str):

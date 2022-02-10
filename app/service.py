@@ -1,7 +1,5 @@
 from random import randint
 from time import sleep
-from typing import Dict
-# from configparser import ConfigParser
 import configparser
 import app
 
@@ -11,15 +9,16 @@ class Service:
         parser = configparser.ConfigParser()
         parser.read(_config)
         self.__config = app.Config(parser['PATH'])
-        print(f'{self.__config.steps=}')
+        # print(f'{self.__config.steps=}')
         self.__browser = app.Browser(self.__config.browser)
 
     def run(self):
         for step in self.__config.steps:
-            print(f'{step=}')
+            # print(f'{step=}')
             self.__browser.action_on_page(step)
-            sleep(randint(1, 5))
             self.__browser.take_screenshoot(self.__config.img)
+            # human imitation delay
+            sleep(randint(1, 5))
 
     def quit(self):
         pass
