@@ -6,8 +6,8 @@ from pathlib import Path
 import selenium.common.exceptions
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
-# from typing import Dict
 
 
 class Browser:
@@ -74,7 +74,7 @@ class Browser:
         self.__browser.get(url_)
 
     def get_element_from_page(self, labels_: str):
-        return self.__browser.find_element_by_xpath(labels_)
+        # return self.__browser., labels_)
 
     def action_on_page(self, this_step: dict):
         elem = ''
