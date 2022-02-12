@@ -74,7 +74,7 @@ class Browser:
         self.__browser.get(url_)
 
     def get_element_from_page(self, labels_: str):
-        # return self.__browser., labels_)
+        return self.__browser.find_element(By.XPATH, labels_)
 
     def action_on_page(self, this_step: dict):
         elem = ''

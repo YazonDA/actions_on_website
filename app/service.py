@@ -10,15 +10,23 @@ class Service:
         parser.read(_config)
         self.__config = app.Config(parser['PATH'])
         # print(f'{self.__config.steps=}')
-        self.__browser = app.Browser(self.__config.browser)
+        self.__browser = ''
 
     def run(self):
-        for step in self.__config.steps:
-            # print(f'{step=}')
-            self.__browser.action_on_page(step)
-            self.__browser.take_screenshoot(self.__config.img)
-            # human imitation delay
-            sleep(randint(1, 5))
+        # The loop for the chain-running task
+        for delay in [300, 300]:
+            self.make_delay(delay)
+            self.__browser = app.Browser(self.__config.browser)
+            for step in self.__config.steps:
+                # print(f'{step=}')
+                self.__browser.action_on_page(step)
+                self.__browser.take_screenshoot(self.__config.img)
+                # human imitation delay
+                sleep(randint(1, 5))
+            del self.__browser
+
+    def make_delay(self, delay):
+        sleep(delay)
 
     def quit(self):
         pass
