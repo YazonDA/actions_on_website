@@ -60,7 +60,6 @@ def schedule_parser(time_list: str) -> tuple:
         tmp_time_1 = int(sec_[0])*3600
         tmp_time_2 = int(sec_[1])*60
         tmp_list.append(tmp_time_1 + tmp_time_2)
-    # print(f'{tmp_list=}')
     return tuple(tmp_list)
 
 
