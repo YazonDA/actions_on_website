@@ -8,13 +8,14 @@ class Service:
     def __init__(self, _config: str):
         parser = configparser.ConfigParser()
         parser.read(_config)
-        self.__config = app.Config(parser['PATH'])
+        self.__config = app.Config(parser['SETUP'])
         # print(f'{self.__config.steps=}')
         self.__browser = ''
 
     def run(self):
         # The loop for the chain-running task
-        for delay in [300, 300]:
+        for delay in self.__config.schedule:
+            print(f'This attempt will start after {delay} sec. Please wait.')
             self.make_delay(delay)
             self.__browser = app.Browser(self.__config.browser)
             for step in self.__config.steps:

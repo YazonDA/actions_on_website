@@ -17,6 +17,8 @@ class Config:
         self.__set_browser_config(app_dir, _config)
         self.__set_img_path(home_dir, _config)
 
+        self.__set_schedule(_config)
+
         # do it later:
         #  - place in STEPS.yaml special Keys (Secret.LOGIN and Secret.PASSWORD)
         #  - some input (implicit) Value of Login & Password
@@ -38,6 +40,28 @@ class Config:
         if not img_path.exists():
             img_path.mkdir()
         self.img = img_path
+
+    def __set_schedule(self, _config):
+        self.schedule = schedule_parser(_config['START_TIMES'])
+
+
+def schedule_parser(time_list: str) -> tuple:
+    """ Module translate string-list of the hours/minutes to the tuple of the seconds.
+    :arg
+    string like "00:01; 03:51".
+    ';' it`s separate between some delta-time.
+    ':' it`s separate between hours (first) and minute (second).
+    :return
+    tuple like (60, 13860)
+    """
+    tmp_list = []
+    for time_ in time_list.split('; '):
+        sec_ = time_.split(':')
+        tmp_time_1 = int(sec_[0])*3600
+        tmp_time_2 = int(sec_[1])*60
+        tmp_list.append(tmp_time_1 + tmp_time_2)
+    # print(f'{tmp_list=}')
+    return tuple(tmp_list)
 
 
 if __name__ == '__main__':
