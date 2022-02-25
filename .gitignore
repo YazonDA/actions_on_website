@@ -1,2 +1,4 @@
-/app/pref/hh_sss.yaml
 /app/.env
+/app/pref/hh_update.yaml
+*__pycache__*
+*cache*

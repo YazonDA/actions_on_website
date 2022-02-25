@@ -18,11 +18,11 @@ class Browser:
         self.__set_browser()
 
     def __set_browser_type(self):
-        import webbrowser as wb
-        default_browser = wb.get()
 
         # Used for:
         #           ordinary
+        # import webbrowser as wb
+        # default_browser = wb.get()
         # self.__type = default_browser.name.casefold()
 
         #           development
@@ -78,16 +78,22 @@ class Browser:
 
     def action_on_page(self, this_step: dict):
         elem = ''
+        print('action_on_page')
+        print(f'{this_step=}')
         if this_step['url']:
+            print("this_step['url']")
             self.open_page(this_step['url'])
             sleep(randint(1, 3))
         if this_step['xpath']:
+            print("this_step['xpath']")
             elem = self.get_element_from_page(this_step['xpath'])
             sleep(randint(1, 3))
         if elem:
             if this_step['data'] == 'Keys.RETURN':
+                print("this_step['data']")
                 elem.send_keys(Keys.RETURN)
             elif this_step['data']:
+                print("this_step['data']")
                 elem.send_keys(this_step['data'])
         sleep(randint(1, 3))
 

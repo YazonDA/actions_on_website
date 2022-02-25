@@ -48,18 +48,32 @@ class Config:
 def schedule_parser(time_list: str) -> tuple:
     """ Module translate string-list of the hours/minutes to the tuple of the seconds.
     :arg
-    string like "00:01; 03:51".
-    ';' it`s separate between some delta-time.
-    ':' it`s separate between hours (first) and minute (second).
+    string like "hh:mm; hh:mm".
+    mm & hh must be greater Zero.
+    separate between hh & mm must be ':'.
+    separate between some hh:mm must be ';'.
     :return
     tuple like (60, 13860)
     """
     tmp_list = []
-    for time_ in time_list.split('; '):
-        sec_ = time_.split(':')
-        tmp_time_1 = int(sec_[0])*3600
-        tmp_time_2 = int(sec_[1])*60
-        tmp_list.append(tmp_time_1 + tmp_time_2)
+    try:
+        time_list = time_list.split('; ')
+    except ValueError as e:
+        # print(f'Wrong format or empty time_list. Will return (0,).')
+        return tuple(0,)
+    for time_ in time_list:
+        try:
+            sec_ = time_.split(':')
+            tmp_time_1 = int(sec_[0])*3600
+            tmp_time_2 = int(sec_[1])*60 if len(sec_) > 1 else 0
+            if tmp_time_1 < 0 or tmp_time_2 < 0:
+                raise ValueError
+            else:
+                sec_ = tmp_time_1 + tmp_time_2
+        except ValueError as e:
+            # print(f'The "{time_}" in ({time_list}) is a wrong format. Will set 0.')
+            sec_ = 0
+        tmp_list.append(sec_)
     return tuple(tmp_list)
 
 
